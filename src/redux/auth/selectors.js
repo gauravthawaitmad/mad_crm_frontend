@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 const authSelect = (state) => state.auth;
 
 export const selectAuth = (state) => {
-  console.log('🔄 Redux state updated:', state.auth);
   return state.auth;
 };
 // export const selectAuth = (state) => true;

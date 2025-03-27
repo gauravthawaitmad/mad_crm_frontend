@@ -26,8 +26,8 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('naviatin to dashboard started....');
-      navigate('/');
+      console.log('..................navigating to dashboard started...................');
+      navigate('/dashboard');
     }
   }, [isSuccess]);
 

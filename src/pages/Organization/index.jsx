@@ -3,10 +3,11 @@ import DynamicForm from '@/forms/DynamicForm';
 import { fields } from './config';
 
 import useLanguage from '@/locale/useLanguage';
+import ReadOrganization from './ReadOrganization';
 
-export default function Customer() {
+export default function Organization() {
   const translate = useLanguage();
-  const entity = 'client';
+  const entity = 'organization';
   const searchConfig = {
     displayLabels: ['name'],
     searchFields: 'name',
@@ -14,10 +15,10 @@ export default function Customer() {
   const deleteModalLabels = ['name'];
 
   const Labels = {
-    PANEL_TITLE: translate('client'),
-    DATATABLE_TITLE: translate('client_list'),
-    ADD_NEW_ENTITY: translate('add_new_client'),
-    ENTITY_NAME: translate('client'),
+    PANEL_TITLE: translate('organization'),
+    DATATABLE_TITLE: translate('organization_list'),
+    ADD_NEW_ENTITY: translate('add_new_organization'),
+    ENTITY_NAME: translate('organization'),
   };
   const configPage = {
     entity,
@@ -31,9 +32,10 @@ export default function Customer() {
   };
   return (
     <CrudModule
-      createForm={<DynamicForm fields={fields} />}
-      updateForm={<DynamicForm fields={fields} />}
+      createForm={(form) => <DynamicForm form={form} fields={fields} />} 
+      updateForm={(form) => <DynamicForm form={form} fields={fields} />}
       config={config}
+      readItem={ <ReadOrganization />}
     />
   );
 }

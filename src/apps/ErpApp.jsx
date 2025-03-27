@@ -48,9 +48,9 @@ export default function ErpCrmApp() {
   //   }
   // }, [appSettings]);
 
-  if (settingIsloaded)
+  if (!settingIsloaded)
     return (
-      <Layout hasSider>
+      <Layout style={{ backgroundColor: 'blue', margin: 0, padding: 0 }} hasSider>
         <Navigation />
 
         {isMobile ? (
@@ -58,10 +58,12 @@ export default function ErpCrmApp() {
             <HeaderContent />
             <Content
               style={{
-                margin: '40px auto 30px',
+                margin: '0',
+                marginLeft : '0px',
                 overflow: 'initial',
                 width: '100%',
-                padding: '0 25px',
+                // padding: '0 20px',
+                paddingRight: '10px',
                 maxWidth: 'none',
               }}
             >
@@ -76,7 +78,7 @@ export default function ErpCrmApp() {
                 margin: '40px auto 30px',
                 overflow: 'initial',
                 width: '100%',
-                padding: '0 50px',
+                padding: '0 30px',
                 maxWidth: 1400,
               }}
             >
