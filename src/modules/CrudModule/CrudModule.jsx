@@ -17,8 +17,10 @@ import { crud } from '@/redux/crud/actions';
 import { useCrudContext } from '@/context/crud';
 
 import { CrudLayout } from '@/layout';
+import LeadForm from '@/forms/LeadForm';
 
-function SidePanelTopContent({ config, formElements, withUpload }) {
+function SidePanelTopContent({ config, formElements, withUpload, readItem}) {
+  // console.log("side pannel component is envolved")
   const translate = useLanguage();
   const { crudContextAction, state } = useCrudContext();
   const { deleteModalLabels } = config;
@@ -79,8 +81,14 @@ function SidePanelTopContent({ config, formElements, withUpload }) {
         </Col>
         <div className="space10"></div>
       </Row>
-      <ReadItem config={config} />
-      <UpdateForm config={config} formElements={formElements} withUpload={withUpload} />
+
+      {isReadBoxOpen && readItem}
+
+      {/* <ReadItem config={config} /> */}
+      {/* <UpdateForm config={config} formElements={formElements} withUpload={withUpload} /> */}
+
+      { isEditBoxOpen && formElements}
+      {/* {formElements} */}
     </>
   );
 }
@@ -106,7 +114,7 @@ function FixHeaderPanel({ config }) {
   );
 }
 
-function CrudModule({ config, createForm, updateForm, withUpload = false }) {
+function CrudModule({ config, createForm, updateForm, withUpload = false, submitButton= true, readItem }) {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
@@ -118,10 +126,12 @@ function CrudModule({ config, createForm, updateForm, withUpload = false }) {
       config={config}
       fixHeaderPanel={<FixHeaderPanel config={config} />}
       sidePanelBottomContent={
-        <CreateForm config={config} formElements={createForm} withUpload={withUpload} />
+        // <CreateForm config={config} formElements={createForm} withUpload={withUpload} submitButton={submitButton} />
+        createForm
       }
       sidePanelTopContent={
-        <SidePanelTopContent config={config} formElements={updateForm} withUpload={withUpload} />
+        <SidePanelTopContent config={config} formElements={updateForm} withUpload={withUpload} readItem={readItem} />
+        // updateForm
       }
     >
       <DataTable config={config} />

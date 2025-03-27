@@ -5,8 +5,11 @@ import { Button, Drawer, Layout, Menu } from 'antd';
 import { useAppContext } from '@/context/appContext';
 
 import useLanguage from '@/locale/useLanguage';
-import logoIcon from '@/style/images/logo-icon.svg';
+import logoIcon from '@/style/images/madlogo.png';
 import logoText from '@/style/images/logo-text.svg';
+
+// import logoText from '@/style/images/logo-text.svg';
+
 
 import useResponsive from '@/hooks/useResponsive';
 
@@ -28,6 +31,10 @@ import {
   ReconciliationOutlined,
 } from '@ant-design/icons';
 
+import { VscOrganization } from 'react-icons/vsc';
+import { MdOutlineLeaderboard } from 'react-icons/md';
+import { RiAdminLine } from 'react-icons/ri';
+
 const { Sider } = Layout;
 
 export default function Navigation() {
@@ -48,6 +55,10 @@ function Sidebar({ collapsible, isMobile = false }) {
   const translate = useLanguage();
   const navigate = useNavigate();
 
+  // Get auth state from localStorage
+  const authData = JSON.parse(localStorage.getItem('auth')) || {};
+  const userRole = authData?.current?.role || ''; // Extract user role
+
   const items = [
     {
       key: 'dashboard',
@@ -55,47 +66,65 @@ function Sidebar({ collapsible, isMobile = false }) {
       label: <Link to={'/'}>{translate('dashboard')}</Link>,
     },
     {
-      key: 'customer',
+      key: 'poc',
       icon: <CustomerServiceOutlined />,
-      label: <Link to={'/customer'}>{translate('customers')}</Link>,
+      label: <Link to={'/poc'}>{translate('POC')}</Link>,
     },
+    {
+      key: 'organization',
+      icon: <VscOrganization />,
+      label: <Link to={'/organization'}>{translate('organization')}</Link>,
+    },
+    {
+      key: 'lead',
+      icon: <MdOutlineLeaderboard />,
+      label: <Link to={'/lead'}>{translate('lead')}</Link>,
+    },
+    ...(userRole === 'super_admin'
+      ? [
+          {
+            key: 'user',
+            icon: <RiAdminLine />,
+            label: <Link to={'/user'}>{translate('user')}</Link>,
+          },
+        ]
+      : []), // Only add this item if the role is "super_admin"
+    // {
+    //   key: 'invoice',
+    //   icon: <ContainerOutlined />,
+    //   label: <Link to={'/invoice'}>{translate('invoices')}</Link>,
+    // },
+    // {
+    //   key: 'quote',
+    //   icon: <FileSyncOutlined />,
+    //   label: <Link to={'/quote'}>{translate('quote')}</Link>,
+    // },
+    // {
+    //   key: 'payment',
+    //   icon: <CreditCardOutlined />,
+    //   label: <Link to={'/payment'}>{translate('payments')}</Link>,
+    // },
 
-    {
-      key: 'invoice',
-      icon: <ContainerOutlined />,
-      label: <Link to={'/invoice'}>{translate('invoices')}</Link>,
-    },
-    {
-      key: 'quote',
-      icon: <FileSyncOutlined />,
-      label: <Link to={'/quote'}>{translate('quote')}</Link>,
-    },
-    {
-      key: 'payment',
-      icon: <CreditCardOutlined />,
-      label: <Link to={'/payment'}>{translate('payments')}</Link>,
-    },
-
-    {
-      key: 'paymentMode',
-      label: <Link to={'/payment/mode'}>{translate('payments_mode')}</Link>,
-      icon: <WalletOutlined />,
-    },
-    {
-      key: 'taxes',
-      label: <Link to={'/taxes'}>{translate('taxes')}</Link>,
-      icon: <ShopOutlined />,
-    },
-    {
-      key: 'generalSettings',
-      label: <Link to={'/settings'}>{translate('settings')}</Link>,
-      icon: <SettingOutlined />,
-    },
-    {
-      key: 'about',
-      label: <Link to={'/about'}>{translate('about')}</Link>,
-      icon: <ReconciliationOutlined />,
-    },
+    // {
+    //   key: 'paymentMode',
+    //   label: <Link to={'/payment/mode'}>{translate('payments_mode')}</Link>,
+    //   icon: <WalletOutlined />,
+    // },
+    // {
+    //   key: 'taxes',
+    //   label: <Link to={'/taxes'}>{translate('taxes')}</Link>,
+    //   icon: <ShopOutlined />,
+    // },
+    // {
+    //   key: 'generalSettings',
+    //   label: <Link to={'/settings'}>{translate('settings')}</Link>,
+    //   icon: <SettingOutlined />,
+    // },
+    // {
+    //   key: 'about',
+    //   label: <Link to={'/about'}>{translate('about')}</Link>,
+    //   icon: <ReconciliationOutlined />,
+    // },
   ];
 
   useEffect(() => {
@@ -128,7 +157,7 @@ function Sidebar({ collapsible, isMobile = false }) {
       collapsed={collapsible ? isNavMenuClose : collapsible}
       onCollapse={onCollapse}
       className="navigation"
-      width={256}
+      width={250}
       style={{
         overflow: 'auto',
         height: '100vh',
@@ -137,7 +166,7 @@ function Sidebar({ collapsible, isMobile = false }) {
         bottom: '20px',
         ...(!isMobile && {
           // border: 'none',
-          ['left']: '20px',
+          // ['left']: '20px',
           top: '20px',
           // borderRadius: '8px',
         }),
@@ -171,7 +200,7 @@ function Sidebar({ collapsible, isMobile = false }) {
         theme={'light'}
         selectedKeys={[currentPath]}
         style={{
-          width: 256,
+          width: 250,
         }}
       />
     </Sider>
@@ -200,11 +229,11 @@ function MobileSidebar() {
       </Button>
       <Drawer
         width={250}
-        // style={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
         placement={'left'}
         closable={false}
         onClose={onClose}
         open={visible}
+        bodyStyle={{ padding: 0 }} // Ensure no extra padding
       >
         <Sidebar collapsible={false} isMobile={true} />
       </Drawer>

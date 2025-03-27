@@ -6,7 +6,7 @@ const Logout = lazy(() => import('@/pages/Logout.jsx'));
 const NotFound = lazy(() => import('@/pages/NotFound.jsx'));
 
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
-const Customer = lazy(() => import('@/pages/Customer'));
+const Poc = lazy(() => import('@/pages/Poc'));
 const Invoice = lazy(() => import('@/pages/Invoice'));
 const InvoiceCreate = lazy(() => import('@/pages/Invoice/InvoiceCreate'));
 
@@ -29,6 +29,13 @@ const Profile = lazy(() => import('@/pages/Profile'));
 
 const About = lazy(() => import('@/pages/About'));
 
+const Organization = lazy(() => import('@/pages/Organization'));
+const Lead = lazy(() => import('@/pages/Lead'));
+const User = lazy(() => import('@/pages/User'));
+
+const auth = JSON.parse(localStorage.getItem('auth')) || {};
+const userRole = auth?.current?.role || null;
+
 let routes = {
   expense: [],
   default: [
@@ -40,19 +47,30 @@ let routes = {
       path: '/logout',
       element: <Logout />,
     },
+    // {
+    //   path: '/about',
+    //   element: <About />,
+    // },
     {
-      path: '/about',
-      element: <About />,
-    },
-    {
-      path: '/dashboard',
+      path: '/',
       element: <Dashboard />,
     },
     {
-      path: '/customer',
-      element: <Customer />,
+      path: '/poc',
+      element: <Poc />,
     },
-
+    {
+      path: '/organization',
+      element: <Organization />,
+    },
+    {
+      path: '/lead',
+      element: <Lead />,
+    },
+    {
+      path: '/user',
+      element: userRole === 'super_admin' ? <User /> : <Navigate to="/" />,
+    },
     {
       path: '/invoice',
       element: <Invoice />,
@@ -102,10 +120,10 @@ let routes = {
       element: <PaymentUpdate />,
     },
 
-    {
-      path: '/settings',
-      element: <Settings />,
-    },
+    // {
+    //   path: '/settings',
+    //   element: <Settings />,
+    // },
     {
       path: '/settings/edit/:settingsKey',
       element: <Settings />,

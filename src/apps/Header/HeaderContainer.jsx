@@ -87,7 +87,7 @@ export default function HeaderContent() {
   return (
     <Header
       style={{
-        padding: '20px',
+        padding: '15px',
         background: '#ffffff',
         display: 'flex',
         flexDirection: 'row-reverse',
@@ -101,7 +101,7 @@ export default function HeaderContent() {
         }}
         trigger={['click']}
         placement="bottomRight"
-        stye={{ width: '280px', float: 'right' }}
+        stye={{ width: '280px', float: 'right'}}
       >
         {/* <Badge dot> */}
         <Avatar
@@ -123,7 +123,7 @@ export default function HeaderContent() {
 
       {/* <AppsButton /> */}
 
-      <UpgradeButton />
+      {/* <UpgradeButton /> */}
     </Header>
   );
 }

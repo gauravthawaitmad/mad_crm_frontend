@@ -9,6 +9,7 @@ const { useBreakpoint } = Grid;
 const { Sider } = Layout;
 
 export default function SidePanel({ config, topContent, bottomContent, fixHeaderPanel }) {
+  // console.log("config recived in side panel", config);
   const screens = useBreakpoint();
 
   const { ADD_NEW_ENTITY } = config;
@@ -65,6 +66,7 @@ export default function SidePanel({ config, topContent, bottomContent, fixHeader
       <div
         className="sidePanelContent"
         style={{
+
           opacity: opacitySider,
           paddingTop: paddingTopSider,
         }}
