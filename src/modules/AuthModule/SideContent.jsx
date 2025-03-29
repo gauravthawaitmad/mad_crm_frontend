@@ -29,10 +29,11 @@ export default function SideContent() {
         />
 
         <Title level={1} style={{ fontSize: 28 }}>
-        CRM
+          CRM
         </Title>
         <Text>
-          Accounting / Invoicing / Quote App <b /> based on Node.js React.js Ant Design
+          Empowering Make A Difference with a seamless CRM - streamlining operations, managing leads,
+          and driving impact efficiently.
         </Text>
 
         <div className="space20"></div>
