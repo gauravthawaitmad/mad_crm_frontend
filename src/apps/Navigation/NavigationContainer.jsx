@@ -163,6 +163,8 @@ function Sidebar({ collapsible, isMobile = false }) {
         height: '100vh',
 
         position: isMobile ? 'absolute' : 'relative',
+        // position: isMobile ? 'relative' : 'absolute',
+
         bottom: '20px',
         ...(!isMobile && {
           // border: 'none',
@@ -170,7 +172,7 @@ function Sidebar({ collapsible, isMobile = false }) {
           top: '20px',
           // borderRadius: '8px',
         }),
-      }}
+      }}  
       theme={'light'}
     >
       <div
@@ -183,7 +185,7 @@ function Sidebar({ collapsible, isMobile = false }) {
         <img src={logoIcon} alt="Logo" style={{ marginLeft: '-5px', height: '40px' }} />
 
         {!showLogoApp && (
-          <img
+          <img 
             src={logoText}
             alt="Logo"
             style={{
@@ -223,7 +225,13 @@ function MobileSidebar() {
         size="large"
         onClick={showDrawer}
         className="mobile-sidebar-btn"
-        style={{ ['marginLeft']: 25 }}
+        // style={{ ['marginLeft']: 25 }}
+        style={{
+          position: 'absolute',
+          left: '10px',
+          top: '15px',
+          zIndex: 1000 /* Ensure it stays above */,
+        }}
       >
         <MenuOutlined style={{ fontSize: 18 }} />
       </Button>
@@ -231,6 +239,7 @@ function MobileSidebar() {
         width={250}
         placement={'left'}
         closable={false}
+        // closable={true}
         onClose={onClose}
         open={visible}
         bodyStyle={{ padding: 0 }} // Ensure no extra padding

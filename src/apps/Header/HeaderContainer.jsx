@@ -51,31 +51,31 @@ export default function HeaderContent() {
   };
 
   const items = [
-    {
-      label: <ProfileDropdown className="headerDropDownMenu" />,
-      key: 'ProfileDropdown',
-    },
-    {
-      type: 'divider',
-    },
-    {
-      icon: <UserOutlined />,
-      key: 'settingProfile',
-      label: (
-        <Link to={'/profile'}>
-          <DropdownMenu text={translate('profile_settings')} />
-        </Link>
-      ),
-    },
-    {
-      icon: <ToolOutlined />,
-      key: 'settingApp',
-      label: <Link to={'/settings'}>{translate('app_settings')}</Link>,
-    },
+    // {
+    //   label: <ProfileDropdown className="headerDropDownMenu" />,
+    //   key: 'ProfileDropdown',
+    // },
+    // {
+    //   type: 'divider',
+    // },
+    // {
+    //   icon: <UserOutlined />,
+    //   key: 'settingProfile',
+    //   label: (
+    //     <Link to={'/profile'}>
+    //       <DropdownMenu text={translate('profile_settings')} />
+    //     </Link>
+    //   ),
+    // },
+    // {
+    //   icon: <ToolOutlined />,
+    //   key: 'settingApp',
+    //   label: <Link to={'/settings'}>{translate('app_settings')}</Link>,
+    // },
 
-    {
-      type: 'divider',
-    },
+    // {
+    //   type: 'divider',
+    // },
 
     {
       icon: <LogoutOutlined />,

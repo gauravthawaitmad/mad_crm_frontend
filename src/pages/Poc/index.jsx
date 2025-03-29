@@ -4,6 +4,7 @@ import PocForm from '@/forms/PocForm';
 import { fields } from './config';
 
 import useLanguage from '@/locale/useLanguage';
+import ReadPoc from './ReadPoc';
 
 export default function Poc() {
   const translate = useLanguage();
@@ -47,6 +48,7 @@ export default function Poc() {
       // createForm={<PocForm config={config} form={createForm} />}
       // updateForm={<PocForm config={config} form={updateForm} isUpdate={true} />}
       config={config}
+      readItem={<ReadPoc/>}
     />
   );
 }

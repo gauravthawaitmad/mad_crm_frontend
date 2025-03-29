@@ -9,7 +9,17 @@ import {
   ArrowRightOutlined,
   ArrowLeftOutlined,
 } from '@ant-design/icons';
-import { Dropdown, Table, Button, Input, Card } from 'antd';
+import {
+  Dropdown,
+  Table,
+  Button,
+  Input,
+  Card,
+  Skeleton,
+  Pagination,
+  Descriptions,
+  Typography,
+} from 'antd';
 import { PageHeader } from '@ant-design/pro-layout';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -38,7 +48,7 @@ function AddNewItem({ config }) {
 
   return (
     <Button onClick={handelClick} type="primary">
-      {!isMobile ? ADD_NEW_ENTITY : <PlusOutlined />}
+      {!isMobile ? ADD_NEW_ENTITY : <PlusOutlined /> }
     </Button>
   );
 }
@@ -50,6 +60,8 @@ export default function DataTable({ config, extra = [] }) {
   const { moneyFormatter } = useMoney();
   const { dateFormat } = useDate();
   const { isMobile } = useResponsive();
+
+  const { Text } = Typography;
 
   const items = [
     {
@@ -160,6 +172,7 @@ export default function DataTable({ config, extra = [] }) {
   const dispatch = useDispatch();
 
   const handelDataTableLoad = useCallback((pagination) => {
+    console.log('Loading data for page:', pagination.current);
     const options = { page: pagination.current || 1, items: pagination.pageSize || 10 };
     dispatch(crud.list({ entity, options }));
   }, []);
@@ -182,32 +195,32 @@ export default function DataTable({ config, extra = [] }) {
     };
   }, []);
 
-  const tableStyles = {
-    // Make table use full width on mobile
-    '@media (max-width: 768px)': {
-      '.ant-table': {
-        width: '100%',
-        margin: '0',
-        padding: '0',
-      },
-      '.ant-table-container': {
-        padding: '0',
-      },
-      // Adjust column widths for mobile
-      '.ant-table-cell': {
-        padding: '8px 4px !important',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-      },
-    },
-  };
+  // const tableStyles = {
+  //   // Make table use full width on mobile
+  //   '@media (max-width: 768px)': {
+  //     '.ant-table': {
+  //       width: '100%',
+  //       margin: '0',
+  //       padding: '0',
+  //     },
+  //     '.ant-table-container': {
+  //       padding: '0',
+  //     },
+  //     // Adjust column widths for mobile
+  //     '.ant-table-cell': {
+  //       padding: '8px 4px !important',
+  //       whiteSpace: 'nowrap',
+  //       overflow: 'hidden',
+  //       textOverflow: 'ellipsis',
+  //     },
+  //   },
+  // };
 
   const tableProps = {
-    scroll: { x: true },
-    // Add responsive configuration
-    responsive: ['xs', 'sm', 'md'],
-    // Customize which columns to show at different breakpoints
+    // scroll: { x: true },
+    // // Add responsive configuration
+    // responsive: ['xs', 'sm', 'md'],
+    // // Customize which columns to show at different breakpoints
     columns: dataTableColumns.map((column) => ({
       ...column,
       responsive: ['xs', 'sm', 'md'],
@@ -228,6 +241,7 @@ export default function DataTable({ config, extra = [] }) {
 
   // console.log("table data source in table :", dataSource )
   // console.log('dataTableColumns values in table :', dataTableColumns);
+  console.log("pagination value in data table :", pagination)
   return (
     <>
       <PageHeader
@@ -275,46 +289,84 @@ export default function DataTable({ config, extra = [] }) {
 
       {isMobile && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {dataSource.map((item) => (
-            <Card key={item._id} style={{ padding: 10 }}>
-              {dataTableColumns
-                .filter((col) => col.dataIndex && col.dataIndex.length) // Ensure valid columns
-                .map((col) => {
-                  let value = col.dataIndex.reduce((acc, key) => acc?.[key], item); // Get nested values
-                  if (col.render) {
-                    value = col.render(value, item); // Apply render function if available
-                  }
-                  return (
-                    <p key={col.dataIndex.join('.')}>
-                      <b>{col.title}:</b> {value || '-'}
-                    </p>
-                  );
-                })}
+          {listIsLoading ? (
+            <>
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+            </>
+          ) : (
+            <>
+              {dataSource.map((item) => (
+                <Card
+                  key={item._id}
+                  style={{
+                    padding: 10,
+                    borderRadius: 10,
+                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid #f0f0f0',
+                  }}
+                  actions={[
+                    <Button type="text" icon={<EyeOutlined />} onClick={() => handleRead(item)} />,
+                    <Button type="text" icon={<EditOutlined />} onClick={() => handleEdit(item)} />,
+                    <Button
+                      type="text"
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => handleDelete(item)}
+                    />,
+                  ]}
+                >
+                  <Descriptions column={1} size="small">
+                  {dataTableColumns
+                    .filter((col) => col.dataIndex && col.dataIndex.length)
+                    .map((col) => {
+                      let value = col.dataIndex.reduce((acc, key) => acc?.[key], item);
 
-              <Button.Group>
-                <Button icon={<EyeOutlined />} onClick={() => handleRead(item)} />
-                <Button icon={<EditOutlined />} onClick={() => handleEdit(item)} />
-                <Button icon={<DeleteOutlined />} danger onClick={() => handleDelete(item)} />
-              </Button.Group>
-            </Card>
-          ))}
+                      if (col.render) {
+                        value = col.render(value, item);
+                      }
+                      
+                      return (
+                        <Descriptions.Item key={col.dataIndex.join('.')} label={col.title}>
+                          {value || '-'}
+                        </Descriptions.Item>
+                      );
+                    })}
+                    </Descriptions>
+                </Card>
+              ))}
+
+              {/* Pagination for Mobile */}
+              <Pagination
+                current={pagination.current}
+                total={pagination.total}
+                pageSize={pagination.pageSize}
+                onChange={(page) =>
+                  handelDataTableLoad({ current: page, pageSize: pagination.pageSize })
+                }
+                showSizeChanger={false}
+                style={{ textAlign: 'center', marginTop: 16 }}
+              />
+            </>
+          )}
         </div>
       )}
 
       {!isMobile && (
         <div style={{ padding: '0px 8px' }}>
-        <Table
-          {...tableProps}
-          columns={dataTableColumns}
-          rowKey={(item) => item._id}
-          dataSource={dataSource}
-          pagination={pagination}
-          loading={listIsLoading}
-          onChange={handelDataTableLoad}
-          scroll={{ x: true }}
-          style={tableStyles}
-        />
-      </div>
+          <Table
+            {...tableProps}
+            columns={dataTableColumns}
+            rowKey={(item) => item._id}
+            dataSource={dataSource}
+            pagination={pagination}
+            loading={listIsLoading}
+            onChange={handelDataTableLoad}
+            scroll={{ x: true }}
+            // style={tableStyles}
+          />
+        </div>
       )}
     </>
   );

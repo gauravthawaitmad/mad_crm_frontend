@@ -42,7 +42,8 @@ export default function LeadForm({ config, isUpdate = false, form }) {
   const { collapsedBox } = crudContextAction;
 
   const { result: currentItem } = useSelector(selectCurrentItem);
-  console.log("initial current Item value in LeadForm :", currentItem)
+  console.log("lead form is rendered................")
+  // console.log("initial current Item value in LeadForm :", currentItem)
 
   const setFormCoversionStage = (value) => {
     console.log("set conversion stage value from current item :", value)
@@ -51,27 +52,46 @@ export default function LeadForm({ config, isUpdate = false, form }) {
     }
 
     if(value == 'interested'){
-      currentItem.conversion_stage = 'prospecting';
+      // currentItem.conversion_stage = 'prospecting';
       console.log("setting tha form conversion stage prospecting")
       setStatus('prospecting')
     }
     
     if(value == 'interested_but_facing_delay'){
-      currentItem.conversion_stage = 'in_conversion'
+      // currentItem.conversion_stage = 'in_conversion'
       currentItem.converted = true
       setStatus('in_conversion');
       setIsConverted(false)
     }
-    else{
-      currentItem.conversion_stage = 'in_conversion';
+    
+    if(value == 'dropped'){
+      // currentItem.conversion_stage = 'in_conversion';
       setStatus('in_conversion')
     }
   }
 
   useEffect(() => {
     if (isUpdate && currentItem) {
+
+    let updatedConversionStage = "new"; // Default stage
+
+    // Map backend conversion_stage to allowed values
+    if (currentItem.conversion_stage === "new") {
+      updatedConversionStage = "new";
+    } else if (
+      currentItem.conversion_stage === "interested" ||
+      currentItem.conversion_stage === "dropped"
+    ) {
+      updatedConversionStage = "prospecting";
+    } else if (currentItem.conversion_stage === "interested_but_facing_delay") {
+      currentItem.conversion_stage == "in_conversion"
+      updatedConversionStage = "in_conversion";
+    }
+
       form.setFieldsValue({
         ...currentItem,
+        converted: currentItem.conversion_stage == 'interested_but_facing_delay' ? false : null,
+        conversion_stage: updatedConversionStage,
         date_of_first_contact: currentItem.date_of_first_contact
           ? dayjs(currentItem.date_of_first_contact)
           : null,
@@ -81,11 +101,12 @@ export default function LeadForm({ config, isUpdate = false, form }) {
           ? dayjs(currentItem.agreement_drop_date)
           : null,
       });
-      console.log("current iteam value in lead form (useeffeect) :", currentItem)
-      setFormCoversionStage(currentItem.conversion_stage)
-      // setStatus(currentItem.conversion_stage || 'new');
+      console.log("current iteam value in lead form middle of useeffeect) :", currentItem)
+      // setFormCoversionStage(currentItem.conversion_stage)
+      setStatus(updatedConversionStage);
+      setIsConverted(currentItem.converted || null)
       setIsMouSigned(currentItem.mou_sign || null)
-      setIsInterested(currentItem.interested || null)
+      setIsInterested(currentItem.interested)
       setIsSpecificDocumentRequired(currentItem.specific_document_required || null);
 
 
@@ -117,6 +138,7 @@ export default function LeadForm({ config, isUpdate = false, form }) {
   };
 
   const [, forceRender] = useState(0);
+
   // When status changes, also update formData
   const handleStatusChange = (value) => {
     console.log('Status changed to:', value);

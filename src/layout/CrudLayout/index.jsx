@@ -6,6 +6,7 @@ import SidePanel from '@/components/SidePanel';
 import { Layout } from 'antd';
 import { useCrudContext } from '@/context/crud';
 import { useAppContext } from '@/context/appContext';
+import useResponsive from '@/hooks/useResponsive';
 
 const { Content } = Layout;
 
@@ -17,6 +18,8 @@ const ContentBox = ({ children }) => {
   const { panel } = crudContextAction;
 
   const [isSidePanelClose, setSidePanel] = useState(isPanelClose);
+
+  const { isMobile } = useResponsive();
 
   useEffect(() => {
     let timer = [];
@@ -40,8 +43,11 @@ const ContentBox = ({ children }) => {
     <Content
       className="whiteBox shadow layoutPadding"
       style={{
-        padding: '30px',
-        margin: '20px auto',
+        // backgroundColor: 'blue',
+        // padding: '30px',
+        padding: isMobile ? '10px' : '30px',
+        // margin: '20px auto',
+        margin: isMobile ? '10px auto' : '20px auto',
         width: '100%',
         maxWidth: '100%',
         flex: 'none',

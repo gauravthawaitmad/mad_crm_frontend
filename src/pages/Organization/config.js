@@ -20,7 +20,7 @@ export const fields = {
   mou_end_date: {
     type: 'date',
   },
-  mou_url: {
-    type: 'button',
+  confirmed_child_count: {
+    type: 'string',
   }
 };

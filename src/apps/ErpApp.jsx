@@ -50,20 +50,22 @@ export default function ErpCrmApp() {
 
   if (!settingIsloaded)
     return (
-      <Layout style={{ backgroundColor: 'blue', margin: 0, padding: 0 }} hasSider>
+      <Layout hasSider>
         <Navigation />
+
+        {/* {!isMobile && <Navigation />} */}
 
         {isMobile ? (
           <Layout style={{ marginLeft: 0 }}>
             <HeaderContent />
             <Content
               style={{
-                margin: '0',
-                marginLeft : '0px',
+                margin: '0px 0px 10px 10px',
+                // backgroundColor:'blue',
                 overflow: 'initial',
                 width: '100%',
-                // padding: '0 20px',
-                paddingRight: '10px',
+                padding: '0 10px',
+                paddingRight: '0px',
                 maxWidth: 'none',
               }}
             >
