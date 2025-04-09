@@ -4,7 +4,7 @@ import { fields } from './config';
 
 import useLanguage from '@/locale/useLanguage';
 import ReadOrganization from './ReadOrganization';
-import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopUp';
+import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopup';
 
 export default function Organization() {
   const translate = useLanguage();

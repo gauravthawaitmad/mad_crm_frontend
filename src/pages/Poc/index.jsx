@@ -5,7 +5,7 @@ import { fields } from './config';
 
 import useLanguage from '@/locale/useLanguage';
 import ReadPoc from './ReadPoc';
-import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopUp';
+import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopup';
 
 export default function Poc() {
   const translate = useLanguage();

@@ -6,7 +6,7 @@ import { Form } from 'antd';
 import useLanguage from '@/locale/useLanguage';
 import ReadLead from '@/pages/Lead/ReadLead';
 import { CrudContextProvider, useCrudContext } from '@/context/crud';
-import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopUp';
+import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopup';
 
 function LeadContent() {
   const translate = useLanguage();
