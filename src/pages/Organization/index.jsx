@@ -4,6 +4,7 @@ import { fields } from './config';
 
 import useLanguage from '@/locale/useLanguage';
 import ReadOrganization from './ReadOrganization';
+import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopUp';
 
 export default function Organization() {
   const translate = useLanguage();
@@ -31,11 +32,19 @@ export default function Organization() {
     deleteModalLabels,
   };
   return (
+    <>
+    <PageInfoPopup 
+    message={
+          'Manage leads: view organization, edit organization details'
+        }
+    heading={'Welcome to organization'}
+    />
     <CrudModule
       createForm={(form) => <DynamicForm form={form} fields={fields} />} 
       updateForm={(form) => <DynamicForm form={form} fields={fields} />}
       config={config}
       readItem={ <ReadOrganization />}
     />
+    </>
   );
 }

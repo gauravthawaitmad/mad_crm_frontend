@@ -6,6 +6,7 @@ import { Form } from 'antd';
 import useLanguage from '@/locale/useLanguage';
 import ReadLead from '@/pages/Lead/ReadLead';
 import { CrudContextProvider, useCrudContext } from '@/context/crud';
+import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopUp';
 
 function LeadContent() {
   const translate = useLanguage();
@@ -31,6 +32,7 @@ function LeadContent() {
     fields,
     searchConfig,
     deleteModalLabels,
+    visibleAddNewEntity : true
   };
 
   const [createForm] = Form.useForm();
@@ -40,13 +42,21 @@ function LeadContent() {
   // createForm={<LeadForm config={config} form={createForm} fields={fields} />}
 
   return (
-    <CrudModule
-      createForm={<LeadForm config={config} form={createForm} fields={fields} />}
-      // updateForm={<LeadForm config={config} form={updateForm} isUpdate={true} fields={fields} />}
-      config={config}
-      updateForm={ <LeadForm config={config} form={updateForm} isUpdate={true} fields={fields} />}
-      readItem={ <ReadLead />}
-    />
+    <>
+      <PageInfoPopup
+        heading={'Welcome to Lead Page'}
+        message={
+          'Manage leads: add partners, edit details, convert to organizations, and update statuses'
+        }
+      />
+      <CrudModule
+        createForm={<LeadForm config={config} form={createForm} fields={fields} />}
+        // updateForm={<LeadForm config={config} form={updateForm} isUpdate={true} fields={fields} />}
+        config={config}
+        updateForm={<LeadForm config={config} form={updateForm} isUpdate={true} fields={fields} />}
+        readItem={<ReadLead />}
+      />
+    </>
   );
 }
 

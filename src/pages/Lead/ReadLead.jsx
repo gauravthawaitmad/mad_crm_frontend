@@ -57,7 +57,7 @@ export default function ReadLead() {
         currentItem?.conversion_stage === 'interested_but_facing_delay') && (
         <>
           <Descriptions.Item label={translate('date_of_first_contact')}>
-            {dayjs(currentItem.date_of_first_contact).format('YYYY-MM-DD')}
+            {dayjs(currentItem.date_of_first_contact).format('DD-MM-YYYY')}
           </Descriptions.Item>
           <Descriptions.Item label={translate('Point_of_Contact_(POC)_Name')}>
             {currentItem?.poc_name}
@@ -101,7 +101,7 @@ export default function ReadLead() {
             {translate(currentItem?.non_conversion_reason)}
           </Descriptions.Item>
           <Descriptions.Item label={translate('agreement_drop_date')}>
-            {dayjs(currentItem.agreement_drop_date).format('YYYY-MM-DD')}
+            {dayjs(currentItem.agreement_drop_date).format('DD-MM-YYYY')}
           </Descriptions.Item>
         </>
       )}
@@ -125,7 +125,7 @@ export default function ReadLead() {
           </Descriptions.Item>
           {currentItem?.date_of_mou_signing && (
             <Descriptions.Item label={translate('date_of_MOU_signing')}>
-              {dayjs(currentItem.date_of_mou_signing).format('YYYY-MM-DD')}
+              {dayjs(currentItem.date_of_mou_signing).format('DD-MM-YYYY')}
             </Descriptions.Item>
           )}
         </>
@@ -139,7 +139,7 @@ export default function ReadLead() {
           </Descriptions.Item>
           {currentItem?.date_of_closing_lead && (
             <Descriptions.Item label={translate('date_of_closing_lead')}>
-              {dayjs(currentItem.date_of_closing_lead).format('YYYY-MM-DD')}
+              {dayjs(currentItem.date_of_closing_lead).format('DD-MM-YYYY')}
             </Descriptions.Item>
           )}
         </>

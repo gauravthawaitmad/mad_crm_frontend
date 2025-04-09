@@ -5,6 +5,7 @@ import { fields } from './config';
 
 import useLanguage from '@/locale/useLanguage';
 import ReadPoc from './ReadPoc';
+import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopUp';
 
 export default function Poc() {
   const translate = useLanguage();
@@ -30,6 +31,7 @@ export default function Poc() {
     fields,
     searchConfig,
     deleteModalLabels,
+    visibleAddNewEntity: true,
   };
   // return (
   //   <CrudModule
@@ -44,11 +46,19 @@ export default function Poc() {
   const [updateForm] = Form.useForm();
 
   return (
-    <CrudModule
-      // createForm={<PocForm config={config} form={createForm} />}
-      // updateForm={<PocForm config={config} form={updateForm} isUpdate={true} />}
-      config={config}
-      readItem={<ReadPoc/>}
-    />
+    <>
+      <PageInfoPopup
+        message={
+          'Manage poc: View poc details of partners, add new poc'
+        }
+        heading={'Welcome to Poc Page'}
+      />
+      <CrudModule
+        createForm={<PocForm config={config} form={createForm} />}
+        updateForm={<PocForm config={config} form={updateForm} isUpdate={true} />}
+        config={config}
+        readItem={<ReadPoc />}
+      />
+    </>
   );
 }

@@ -38,8 +38,9 @@ export default function LeadForm({ config, isUpdate = false, form }) {
 
 
   const dispatch = useDispatch();
-  const { crudContextAction } = useCrudContext();
+  const { crudContextAction, state } = useCrudContext();
   const { collapsedBox } = crudContextAction;
+  const {isEditBoxOpen} = state;
 
   const { result: currentItem } = useSelector(selectCurrentItem);
   console.log("lead form is rendered................")
@@ -234,6 +235,7 @@ export default function LeadForm({ config, isUpdate = false, form }) {
         );
         crudContextAction.panel.close();
         crudContextAction.editBox.close();
+        
       } else {
         await dispatch(crud.create({ entity: 'lead', jsonData: dataToSend }));
         crudContextAction.panel.close();
@@ -292,8 +294,12 @@ export default function LeadForm({ config, isUpdate = false, form }) {
             }}
             options={[
               { label: translate('new'), value: 'new' },
-              { label: translate('prospecting'), value: 'prospecting' },
-              { label: translate('in_conversion'), value: 'in_conversion' }
+              { label: translate('prospecting'), value: 'prospecting', disabled: !isEditBoxOpen },
+              {
+                label: translate('in_conversion'),
+                value: 'in_conversion',
+                disabled: !isEditBoxOpen,
+              },
             ]}
           />
         </Form.Item>
@@ -333,9 +339,22 @@ export default function LeadForm({ config, isUpdate = false, form }) {
         <Form.Item
           label={translate('pincode')}
           name="pincode"
-          rules={[{ required: true, message: translate('please_enter_pincode') }]}
+          rules={[
+            { required: true, message: translate('please_enter_pincode') },
+            { pattern: /^[1-9][0-9]{5}$/, message: translate('pincode_must_be_6_digits') },
+          ]}
         >
-          <Input onChange={(e) => handleFieldChange('pincode', e.target.value)} />
+          <Input
+            type="text"
+            maxLength={6}
+            onChange={(e) => {
+              let value = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+              if (value.length > 6) {
+                value = value.slice(0, 6); // Trim extra digits
+              }
+              handleFieldChange('pincode', value);
+            }}
+          />
         </Form.Item>
 
         <CustomColorSelect name="lead_source" label="lead_source" required options={lead_source} />
@@ -354,6 +373,7 @@ export default function LeadForm({ config, isUpdate = false, form }) {
             >
               <DatePicker
                 style={{ width: '100%' }}
+                format="DD-MM-YYYY"
                 onChange={(date) =>
                   handleFieldChange(
                     'date_of_first_conversation',
@@ -371,14 +391,32 @@ export default function LeadForm({ config, isUpdate = false, form }) {
               <Input onChange={(e) => handleFieldChange('poc_designation', e.target.value)} />
             </Form.Item>
 
-            <Form.Item label={translate('POC_Contact')} name="poc_contact" required>
+            <Form.Item
+              label={translate('POC_Contact')}
+              name="poc_contact"
+              rules={[
+                { required: true, message: translate('Please enter contact number') },
+                {
+                  pattern: /^[6789]\d{9}$/, // Starts with 6,7,8,9 and exactly 10 digits
+                  message: translate('Invalid contact number'),
+                },
+              ]}
+            >
               <Input
                 placeholder="+91 1234567890"
+                maxLength={10}
                 onChange={(e) => handleFieldChange('poc_contact', e.target.value)}
               />
             </Form.Item>
 
-            <Form.Item label={translate('POC_Email')} name="poc_email" required>
+            <Form.Item
+              label={translate('POC_Email')}
+              name="poc_email"
+              rules={[
+                { required: true, message: translate('Please enter email') },
+                { type: 'email', message: translate('Invalid email address') },
+              ]}
+            >
               <Input onChange={(e) => handleFieldChange('poc_email', e.target.value)} />
             </Form.Item>
 
@@ -534,6 +572,7 @@ export default function LeadForm({ config, isUpdate = false, form }) {
             >
               <DatePicker
                 style={{ width: '100%' }}
+                format="DD-MM-YYYY"
                 onChange={(date) =>
                   handleFieldChange(
                     'date_of_closing_lead',
@@ -577,6 +616,7 @@ export default function LeadForm({ config, isUpdate = false, form }) {
                   >
                     <DatePicker
                       style={{ width: '100%' }}
+                      format="DD-MM-YYYY"
                       onChange={(date) =>
                         handleFieldChange(
                           'date_of_MOU_signing',
@@ -596,7 +636,7 @@ export default function LeadForm({ config, isUpdate = false, form }) {
                       },
                     ]}
                   >
-                    <DatePicker style={{ width: '100%' }} />
+                    <DatePicker style={{ width: '100%' }} format="DD-MM-YYYY" />
                   </Form.Item>
 
                   <Form.Item
@@ -609,7 +649,7 @@ export default function LeadForm({ config, isUpdate = false, form }) {
                       },
                     ]}
                   >
-                    <DatePicker style={{ width: '100%' }} />
+                    <DatePicker style={{ width: '100%' }} format="DD-MM-YYYY" />
                   </Form.Item>
 
                   <Form.Item

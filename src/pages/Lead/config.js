@@ -7,7 +7,7 @@ export const fields = {
   partner_name: {
     type: 'email',
   },
-  city: {
+  city_name: {
     type: 'string',
   },
   // poc_name: {

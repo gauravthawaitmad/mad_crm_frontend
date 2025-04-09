@@ -66,6 +66,11 @@ function Sidebar({ collapsible, isMobile = false }) {
       label: <Link to={'/'}>{translate('dashboard')}</Link>,
     },
     {
+      key: 'lead',
+      icon: <MdOutlineLeaderboard />,
+      label: <Link to={'/lead'}>{translate('lead')}</Link>,
+    },
+    {
       key: 'poc',
       icon: <CustomerServiceOutlined />,
       label: <Link to={'/poc'}>{translate('POC')}</Link>,
@@ -75,11 +80,7 @@ function Sidebar({ collapsible, isMobile = false }) {
       icon: <VscOrganization />,
       label: <Link to={'/organization'}>{translate('organization')}</Link>,
     },
-    {
-      key: 'lead',
-      icon: <MdOutlineLeaderboard />,
-      label: <Link to={'/lead'}>{translate('lead')}</Link>,
-    },
+
     ...(userRole === 'super_admin'
       ? [
           {

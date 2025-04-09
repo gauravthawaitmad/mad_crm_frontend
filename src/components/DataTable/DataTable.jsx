@@ -96,6 +96,7 @@ export default function DataTable({ config, extra = [] }) {
     console.log('After calling readBox.open(), isReadBoxOpen:', state.isReadBoxOpen);
   };
   function handleEdit(record) {
+    console.log("sending Editing record :", record)
     dispatch(crud.currentItem({ data: record }));
     dispatch(crud.currentAction({ actionType: 'update', data: record }));
     editBox.open();
@@ -103,6 +104,7 @@ export default function DataTable({ config, extra = [] }) {
     collapsedBox.open();
   }
   function handleDelete(record) {
+    console.log("sending deleting record :", record)
     dispatch(crud.currentAction({ actionType: 'delete', data: record }));
     modal.open();
   }
@@ -277,8 +279,8 @@ export default function DataTable({ config, extra = [] }) {
           >
             {!isMobile && translate('Refresh')}
           </Button>,
-
-          <AddNewItem key={`${uniqueId()}`} config={config} />,
+          // <AddNewItem key={`${uniqueId()}`} config={config} />,
+          config.visibleAddNewEntity && <AddNewItem key={`${uniqueId()}`} config={config} />,
         ]}
         // style={{
         //   padding: '10px 0px',
@@ -318,22 +320,22 @@ export default function DataTable({ config, extra = [] }) {
                   ]}
                 >
                   <Descriptions column={1} size="small">
-                  {dataTableColumns
-                    .filter((col) => col.dataIndex && col.dataIndex.length)
-                    .map((col) => {
-                      let value = col.dataIndex.reduce((acc, key) => acc?.[key], item);
+                    {dataTableColumns
+                      .filter((col) => col.dataIndex && col.dataIndex.length)
+                      .map((col) => {
+                        let value = col.dataIndex.reduce((acc, key) => acc?.[key], item);
 
-                      if (col.render) {
-                        value = col.render(value, item);
-                      }
-                      
-                      return (
-                        <Descriptions.Item key={col.dataIndex.join('.')} label={col.title}>
-                          {value || '-'}
-                        </Descriptions.Item>
-                      );
-                    })}
-                    </Descriptions>
+                        if (col.render) {
+                          value = col.render(value, item);
+                        }
+
+                        return (
+                          <Descriptions.Item key={col.dataIndex.join('.')} label={col.title}>
+                            {value || '-'}
+                          </Descriptions.Item>
+                        );
+                      })}
+                  </Descriptions>
                 </Card>
               ))}
 

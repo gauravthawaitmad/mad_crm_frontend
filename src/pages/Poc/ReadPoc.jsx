@@ -47,7 +47,7 @@ export default function ReadPoc() {
       <Descriptions.Item label={translate('co_name')}>{currentItem?.co_name}</Descriptions.Item>
 
       <Descriptions.Item label={translate('date_of_first_contact')}>
-        {dayjs(currentItem?.date_of_first_contact).format('YYYY-MM-DD')}
+        {dayjs(currentItem?.date_of_first_contact).format('DD-MM-YYYY')}
       </Descriptions.Item>
 
       <Descriptions.Item label={translate('lead_source')}>
@@ -57,7 +57,7 @@ export default function ReadPoc() {
       {currentItem?.conversion_stage === 'converted' && (
         <>
           <Descriptions.Item label={translate('date_of_first_contact')}>
-            {dayjs(currentItem.date_of_first_contact).format('YYYY-MM-DD')}
+            {dayjs(currentItem.date_of_first_contact).format('DD-MM-YYYY')}
           </Descriptions.Item>
           <Descriptions.Item label={translate('Point_of_Contact_(POC)_Name')}>
             {currentItem?.poc_name}
@@ -96,7 +96,7 @@ export default function ReadPoc() {
             {currentItem?.mou_sign == true ? 'Yes' : 'No'}
           </Descriptions.Item>
           <Descriptions.Item label={translate('date_of_MOU_signing')}>
-            {dayjs(currentItem.date_of_mou_signing).format('YYYY-MM-DD')}
+            {dayjs(currentItem.date_of_mou_signing).format('DD-MM-YYYY')}
           </Descriptions.Item>
           {/* MOU Document Link */}
           {currentItem?.mou_url && (
@@ -113,13 +113,13 @@ export default function ReadPoc() {
             </Descriptions.Item>
           )}
           <Descriptions.Item label={translate('mou_sign_date')}>
-            {dayjs(currentItem.mou_sign_date).format('YYYY-MM-DD')}
+            {dayjs(currentItem.mou_sign_date).format('DD-MM-YYYY')}
           </Descriptions.Item>
           <Descriptions.Item label={translate('mou_start_date')}>
-            {dayjs(currentItem.mou_start_date).format('YYYY-MM-DD')}
+            {dayjs(currentItem.mou_start_date).format('DD-MM-YYYY')}
           </Descriptions.Item>
           <Descriptions.Item label={translate('mou_end_date')}>
-            {dayjs(currentItem.mou_end_date).format('YYYY-MM-DD')}
+            {dayjs(currentItem.mou_end_date).format('DD-MM-YYYY')}
           </Descriptions.Item>
           <Descriptions.Item label={translate('confirmed_child_count')}>
             {currentItem?.confirmed_child_count}

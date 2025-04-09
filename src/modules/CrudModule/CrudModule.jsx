@@ -27,6 +27,7 @@ function SidePanelTopContent({ config, formElements, withUpload, readItem}) {
   const { modal, editBox } = crudContextAction;
 
   const { isReadBoxOpen, isEditBoxOpen } = state;
+  // console.log(" is Edit Box open in side pannel content :", isEditBoxOpen)
   const { result: currentItem } = useSelector(selectCurrentItem);
   const dispatch = useDispatch();
 
@@ -51,9 +52,9 @@ function SidePanelTopContent({ config, formElements, withUpload, readItem}) {
   const show = isReadBoxOpen || isEditBoxOpen ? { opacity: 1 } : { opacity: 0 };
   return (
     <>
-      <Row style={show} gutter={(24, 24)}>
+      {/* <Row style={show} gutter={(24, 24)}>
         <Col span={10}>
-          <p style={{ marginBottom: '10px' }}>{labels}</p>
+          <p style={{ marginBottom: '10px' }}>Edit Poc Details</p>
         </Col>
         <Col span={14}>
           <Button
@@ -80,14 +81,22 @@ function SidePanelTopContent({ config, formElements, withUpload, readItem}) {
           <div className="line"></div>
         </Col>
         <div className="space10"></div>
-      </Row>
+      </Row> */}
+
+      <div style={{ textAlign: 'center', marginBottom: '15px', marginTop: '0px' }}>
+        <h3 style={{ fontWeight: 'bold', color: '#333' }}>
+          {isEditBoxOpen
+            ? `Edit ${translate(config.entity)} Details`
+            : `${translate(config.entity)} Details`}
+        </h3>
+      </div>
 
       {isReadBoxOpen && readItem}
 
       {/* <ReadItem config={config} /> */}
       {/* <UpdateForm config={config} formElements={formElements} withUpload={withUpload} /> */}
 
-      { isEditBoxOpen && formElements}
+      {isEditBoxOpen && formElements}
       {/* {formElements} */}
     </>
   );

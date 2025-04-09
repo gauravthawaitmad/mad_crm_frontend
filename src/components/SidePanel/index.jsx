@@ -14,8 +14,8 @@ export default function SidePanel({ config, topContent, bottomContent, fixHeader
 
   const { ADD_NEW_ENTITY } = config;
   const { state, crudContextAction } = useCrudContext();
-  const { isPanelClose, isBoxCollapsed } = state;
-  const { panel, collapsedBox } = crudContextAction;
+  const { isPanelClose, isBoxCollapsed, isEditBoxOpen } = state;
+  const { panel, collapsedBox, editBox } = crudContextAction;
   const [isSidePanelClose, setSidePanel] = useState(isPanelClose);
   const [leftSider, setLeftSider] = useState('-1px');
   const [opacitySider, setOpacitySider] = useState(0);
@@ -49,6 +49,12 @@ export default function SidePanel({ config, topContent, bottomContent, fixHeader
 
   const collapsePanel = () => {
     panel.collapse();
+
+    //this is added because when collapse box is closed still isEditBoxvalue is true 
+    if (isEditBoxOpen) {
+      console.log('---yess edit box is opend--- and isEditBoxOpenValu is :', isEditBoxOpen);
+      editBox.close();
+    }
   };
 
   const collapsePanelBox = () => {
