@@ -96,7 +96,7 @@ export default function DataTable({ config, extra = [] }) {
     console.log('After calling readBox.open(), isReadBoxOpen:', state.isReadBoxOpen);
   };
   function handleEdit(record) {
-    console.log("sending Editing record :", record)
+    // console.log("sending Editing record :", record)
     dispatch(crud.currentItem({ data: record }));
     dispatch(crud.currentAction({ actionType: 'update', data: record }));
     editBox.open();
@@ -243,7 +243,7 @@ export default function DataTable({ config, extra = [] }) {
 
   // console.log("table data source in table :", dataSource )
   // console.log('dataTableColumns values in table :', dataTableColumns);
-  console.log("pagination value in data table :", pagination)
+  // console.log("pagination value in data table :", pagination)
   return (
     <>
       <PageHeader

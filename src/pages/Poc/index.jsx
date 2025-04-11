@@ -31,7 +31,7 @@ export default function Poc() {
     fields,
     searchConfig,
     deleteModalLabels,
-    visibleAddNewEntity: true,
+    // visibleAddNewEntity: true,
   };
   // return (
   //   <CrudModule

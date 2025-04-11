@@ -33,9 +33,9 @@ export default function ErpCrmApp() {
 
   const dispatch = useDispatch();
 
-  useLayoutEffect(() => {
-    dispatch(settingsAction.list({ entity: 'setting' }));
-  }, []);
+  // useLayoutEffect(() => {
+  //   dispatch(settingsAction.list({ entity: 'setting' }));
+  // }, []);
 
   // const appSettings = useSelector(selectAppSettings);
 

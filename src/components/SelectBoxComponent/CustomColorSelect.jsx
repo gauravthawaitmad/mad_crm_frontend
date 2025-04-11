@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Select, Tag } from 'antd';
 import useLanguage from '@/locale/useLanguage';
 
-export default function CustomColorSelect({ name, label, required, options }) {
+export default function CustomColorSelect({ name, label, required, options, disabled }) {
   const translate = useLanguage();
 
   return (
@@ -22,6 +22,7 @@ export default function CustomColorSelect({ name, label, required, options }) {
         }
         style={{ width: '100%' }}
         optionLabelProp="label"
+        disabled = {disabled}
       >
         {options.map((option) => (
           <Select.Option key={option.value} value={option.value} label={option.label}>

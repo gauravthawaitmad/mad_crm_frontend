@@ -1,12 +1,13 @@
 import CrudModule from '@/modules/CrudModule/CrudModule';
 import DynamicForm from '@/forms/DynamicForm';
 import { fields } from './config';
-
+import { Form } from 'antd';
 import useLanguage from '@/locale/useLanguage';
 import ReadOrganization from './ReadOrganization';
 import PageInfoPopup from '@/components/CustomPopUp/PageInfoPopup';
+import OrganizationForm from '@/forms/OrganizationForm';
 
-export default function Organization() {
+export default function Organization(){
   const translate = useLanguage();
   const entity = 'organization';
   const searchConfig = {
@@ -31,20 +32,26 @@ export default function Organization() {
     searchConfig,
     deleteModalLabels,
   };
+
+  const [createForm] = Form.useForm();
+  const [updateForm] = Form.useForm();
+
   return (
     <>
-    <PageInfoPopup 
-    message={
-          'Manage leads: view organization, edit organization details'
+      <PageInfoPopup
+        heading={'Welcome to Organization Page'}
+        message={
+          'Manage organization: view, edit details'
         }
-    heading={'Welcome to organization'}
-    />
-    <CrudModule
-      createForm={(form) => <DynamicForm form={form} fields={fields} />} 
-      updateForm={(form) => <DynamicForm form={form} fields={fields} />}
-      config={config}
-      readItem={ <ReadOrganization />}
-    />
+      />
+      <CrudModule
+        createForm={<OrganizationForm config={config} form={createForm} fields={fields} />}
+        // updateForm={<LeadForm config={config} form={updateForm} isUpdate={true} fields={fields} />}
+        config={config}
+        updateForm={<OrganizationForm config={config} form={updateForm} isUpdate={true} fields={fields} />}
+        readItem={<ReadOrganization />}
+      />
     </>
   );
 }
+

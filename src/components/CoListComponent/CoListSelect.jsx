@@ -5,7 +5,7 @@ import { API_BASE_URL } from '@/config/serverApiConfig';
 import storePersist from '@/redux/storePersist';
 import useLanguage from '@/locale/useLanguage';
 
-export default function CoListSelect({ name, label, required }) {
+export default function CoListSelect({ name, label, required, disabled }) {
   const translate = useLanguage();
   const [coList, setCoList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -50,6 +50,7 @@ export default function CoListSelect({ name, label, required }) {
         style={{ width: '100%' }}
         placeholder={translate('Select a CO')}
         notFoundContent={translate('No COs found')}
+        disabled= {disabled}
       >
         {coList.map((co) => (
           <Select.Option key={co.id} value={co.id}>
