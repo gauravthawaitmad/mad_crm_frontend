@@ -58,15 +58,15 @@ export default function HeaderContent() {
     // {
     //   type: 'divider',
     // },
-    // {
-    //   icon: <UserOutlined />,
-    //   key: 'settingProfile',
-    //   label: (
-    //     <Link to={'/profile'}>
-    //       <DropdownMenu text={translate('profile_settings')} />
-    //     </Link>
-    //   ),
-    // },
+    {
+      icon: <UserOutlined />,
+      key: 'settingProfile',
+      label: (
+        <Link to={'/profile'}>
+          <DropdownMenu text={translate('profile_settings')} />
+        </Link>
+      ),
+    },
     // {
     //   icon: <ToolOutlined />,
     //   key: 'settingApp',
@@ -90,18 +90,27 @@ export default function HeaderContent() {
         padding: '15px',
         background: '#ffffff',
         display: 'flex',
-        flexDirection: 'row-reverse',
-        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
         gap: ' 15px',
       }}
     >
+
+      <div style={{ textAlign: 'left' }}>
+        <div style={{ fontWeight: 500 }}>
+          {currentAdmin?.name} {currentAdmin?.surname}
+        </div>
+        <div style={{ fontSize: '12px', color: '#888' }}>{currentAdmin?.first_name}</div>
+      </div>
+
       <Dropdown
         menu={{
           items,
         }}
         trigger={['click']}
         placement="bottomRight"
-        stye={{ width: '280px', float: 'right'}}
+        stye={{ width: '280px', float: 'right' }}
       >
         {/* <Badge dot> */}
         <Avatar

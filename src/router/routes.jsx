@@ -67,10 +67,10 @@ let routes = {
       path: '/lead',
       element: <Lead />,
     },
-    {
-      path: '/user',
-      element: userRole === 'super_admin' ? <User /> : <Navigate to="/" />,
-    },
+    // {
+    //   path: '/user',
+    //   element: userRole === 'super_admin' ? <User /> : <Navigate to="/" />,
+    // },
     {
       path: '/invoice',
       element: <Invoice />,

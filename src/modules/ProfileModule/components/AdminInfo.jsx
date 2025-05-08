@@ -20,6 +20,7 @@ const AdminInfo = ({ config }) => {
   const { modal, updatePanel } = profileContextAction;
   const { ENTITY_NAME } = config;
   const currentAdmin = useSelector(selectCurrentAdmin);
+  console.log("current admin details in admin infopage :", currentAdmin)
 
   return (
     <>
@@ -28,16 +29,16 @@ const AdminInfo = ({ config }) => {
         title={ENTITY_NAME}
         ghost={false}
         extra={[
-          <Button
-            key={`${uniqueId()}`}
-            onClick={() => {
-              updatePanel.open();
-            }}
-            type="primary"
-            icon={<EditOutlined />}
-          >
-            {translate('Edit')}
-          </Button>,
+          // <Button
+          //   key={`${uniqueId()}`}
+          //   onClick={() => {
+          //     updatePanel.open();
+          //   }}
+          //   type="primary"
+          //   icon={<EditOutlined />}
+          // >
+          //   {translate('Edit')}
+          // </Button>,
           <Button
             key={`${uniqueId()}`}
             icon={<LockOutlined />}
@@ -66,17 +67,17 @@ const AdminInfo = ({ config }) => {
             }}
             alt={`${currentAdmin?.name}`}
           >
-            {currentAdmin?.name.charAt(0).toUpperCase()}
+            {currentAdmin?.name}
           </Avatar>
         </Col>
         <Col xs={{ span: 24 }} sm={{ span: 18 }}>
           <Descriptions column={1} size="middle">
-            <Descriptions.Item label={translate('first name')}>
-              {currentAdmin?.name}
+            <Descriptions.Item label={translate('Full Name')}>
+              {currentAdmin?.first_name}
             </Descriptions.Item>
-            <Descriptions.Item label={translate('last name')}>
+            {/* <Descriptions.Item label={translate('last name')}>
               {currentAdmin?.surname}
-            </Descriptions.Item>
+            </Descriptions.Item> */}
             <Descriptions.Item label={translate('email')}>{currentAdmin?.email}</Descriptions.Item>
             <Descriptions.Item label={translate('role')}>{currentAdmin?.role}</Descriptions.Item>
           </Descriptions>

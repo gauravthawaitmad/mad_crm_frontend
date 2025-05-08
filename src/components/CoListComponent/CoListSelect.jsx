@@ -53,8 +53,8 @@ export default function CoListSelect({ name, label, required, disabled }) {
         disabled= {disabled}
       >
         {coList.map((co) => (
-          <Select.Option key={co.id} value={co.id}>
-            {translate(`${co.first_name} ${co.last_name || ''}`.trim())}
+          <Select.Option key={co.user_id} value={co.user_id}>
+            {translate(`${co.user_display_name}`.trim())}
           </Select.Option>
         ))}
       </Select>

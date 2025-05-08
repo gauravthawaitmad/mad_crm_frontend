@@ -18,7 +18,7 @@ function includeToken() {
 
   axios.defaults.withCredentials = true;
   const auth = storePersist.get('auth');
-
+  console.log("auth token in include token function :", auth.current.token)
   if (auth) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${auth.current.token}`;
   }

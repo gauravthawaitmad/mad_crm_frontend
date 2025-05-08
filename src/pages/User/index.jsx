@@ -29,6 +29,8 @@ export default function Users() {
     fields,
     searchConfig,
     deleteModalLabels,
+    // visibleAddNewEntity: true,
+    
   };
 
   const [createForm] = Form.useForm();
