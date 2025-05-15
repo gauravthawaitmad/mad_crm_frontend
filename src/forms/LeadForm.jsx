@@ -468,8 +468,8 @@ export default function LeadForm({ config, isUpdate = false, form }) {
                   validator: (_, value) => {
                     if (!value) return Promise.resolve(); // Skip validation if empty (handled by `required`)
                     const number = Number(value);
-                    if (isNaN(number) || number < 40 || number > 80) {
-                      return Promise.reject(translate('value_must_be_between_40_and_80'));
+                    if (isNaN(number) || number < 40 || number > 60) {
+                      return Promise.reject(translate('value_must_be_between_40_and_60'));
                     }
                     return Promise.resolve();
                   },
@@ -487,13 +487,13 @@ export default function LeadForm({ config, isUpdate = false, form }) {
               rules={[
                 {
                   required: true,
-                  message: translate('please_select_at_least_two_classes'),
+                  message: translate('please_select_at_least_one_classes'),
                 },
                 {
                   validator: (_, value) =>
-                    value && value.length >= 2
+                    value && value.length >= 1
                       ? Promise.resolve()
-                      : Promise.reject(translate('please_select_at_least_two_classes')),
+                      : Promise.reject(translate('please_select_at_least_one_classes')),
                 },
               ]}
             >
