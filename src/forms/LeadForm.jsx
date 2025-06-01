@@ -679,7 +679,13 @@ export default function LeadForm({ config, isUpdate = false, form }) {
                   ]}
                 >
                   <Upload
-                    beforeUpload={() => false} // Prevent automatic upload
+                    beforeUpload={(file) => {
+                      const isLt15MB = file.size / 1024 / 1024 < 15;
+                      if (!isLt15MB) {
+                        window.alert(translate('File_size_should_be_less_than_15MB'));
+                      }
+                      return isLt15MB ? false : Upload.LIST_IGNORE; // prevent uploading and exclude from fileList
+                    }}
                     onChange={(info) => handleFileChange(info.fileList)}
                   >
                     <Button icon={<UploadOutlined />}>{translate('Click_to_upload')}</Button>
