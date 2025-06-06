@@ -458,13 +458,13 @@ export default function OrganizationForm({ config, isUpdate = false, form }) {
           rules={[
             {
               required: true,
-              message: translate('please_select_at_least_two_classes'),
+              message: translate('please_select_at_least_one_classes'),
             },
             {
               validator: (_, value) =>
-                value && value.length >= 2
+                value && value.length >= 1
                   ? Promise.resolve()
-                  : Promise.reject(translate('please_select_at_least_two_classes')),
+                  : Promise.reject(translate('please_select_at_least_one_classes')),
             },
           ]}
         >
